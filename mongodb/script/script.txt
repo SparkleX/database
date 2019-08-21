@@ -1,0 +1,38 @@
+show dbs
+use schema
+
+show collections
+
+//db.createCollection("item") 
+
+db.bp.insert({"name" : "c005"})
+db.bp.update({'name':'c00c'},{$set:{'name':'c002'}})
+
+db.bp.find()
+db.bp.findOne()
+db.bp.find({"name":"c00c"})
+db.bp.find({"name":{$gte:"c001"}})
+db.bp.find({"name":{$eq:"c001"},"name":"c002"})
+db.bp.find({$or:[{"name":{$eq:"c001"}},{"name":"c003"}]})
+db.bp.find({name:/1/})
+db.bp.find({name:/^1/}) start with
+db.bp.find({name:/1$/}) end with
+
+db.bp.find().limit(2).skip(1)
+
+db.bp.find().sort({name:-1})
+
+index
+db.bp.getIndexes()
+db.bp.createIndex({"name":1})
+db.col.dropIndex("name")
+
+GeoMap
+db.map.insert({"name" : "home",pos:[0,0]})
+db.map.insert({"name" : "office",pos:[0,1]})
+db.map.insert({"name" : "store",pos:[1,1]})
+db.map.createIndex( {pos: "2d"} )
+db.map.find({pos:{ $near: [0,0], $maxDistance: 1}})
+db.map.find({"pos":{$geoWithin:{"$box":[[0,0],[0,1]]}}})
+db.map.find({"pos":{$geoWithin:{"$polygon":[[0,0],[0,1],[1,0]]}}})
+db.map.find({"pos":{$geoWithin:{"$center":[[0,0],1]}}})
